@@ -2,7 +2,7 @@
     <v-app class="mx-auto overflow-hidden" >
 
 
-
+        <v-main>
 
         <v-app-bar
                 height="70"
@@ -11,19 +11,18 @@
         >
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 
-
-
-
         </v-app-bar>
 
+<div style="display: flex">
+
+
+        <router-view style="order: 2"/>
         <v-navigation-drawer
                 v-model="drawer"
-                temporary
+                style="order: 1"
         >
             <v-list
 
-                    nav
-                    dense
             >
                 <v-list-item-group
                         v-model="group"
@@ -47,9 +46,10 @@
                     </v-list-item>
                 </v-list-item-group>
             </v-list>
-        </v-navigation-drawer>
 
-        <v-spacer></v-spacer>
+        </v-navigation-drawer>
+</div>
+          </v-main>
 
     </v-app>
 </template>
