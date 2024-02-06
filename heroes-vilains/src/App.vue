@@ -30,20 +30,17 @@
 
                 >
                     <v-list-item>
-                        <v-list-item-title>Foo</v-list-item-title>
+                        <v-list-item-title @click="redirect(1)">Login</v-list-item-title>
                     </v-list-item>
 
                     <v-list-item>
-                        <v-list-item-title>Bar</v-list-item-title>
+                        <v-list-item-title @click="redirect(2)">Organisations</v-list-item-title>
                     </v-list-item>
 
                     <v-list-item>
-                        <v-list-item-title>Fizz</v-list-item-title>
+                        <v-list-item-title @click="redirect(3)">Equipes</v-list-item-title>
                     </v-list-item>
 
-                    <v-list-item>
-                        <v-list-item-title>Buzz</v-list-item-title>
-                    </v-list-item>
                 </v-list-item-group>
             </v-list>
 
@@ -66,5 +63,15 @@ export default {
             this.drawer = false
         },
     },
+    methods: {
+        async redirect(id){
+            switch (id){
+                case 1 : await this.$router.push('/login'); break;
+                case 2 : await this.$router.push('/organisation'); break;
+                case 3 : await this.$router.push('/team/list'); break;
+            }
+
+        }
+    }
 }
 </script>
