@@ -10,6 +10,10 @@
                 prominent
         >
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+            <v-spacer></v-spacer>
+            <v-btn icon @click="redirect(1)">
+                <h3>Login</h3>
+            </v-btn>
 
         </v-app-bar>
 
