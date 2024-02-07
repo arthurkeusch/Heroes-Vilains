@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import {createOrganisation, getAllOrganisations} from "@/services/org.service";
 
 Vue.use(Vuex)
 
@@ -66,5 +67,14 @@ export default new Vuex.Store({
                 commit('setLogout');
             }
         },
+
+        async getAllOrganisations({commit}) {
+            let listOrganisation = await getAllOrganisations();
+            commit('updateListOrganisations', listOrganisation.data);
+        },
+
+        async createOrganisation(context, { name, password }) {
+            return await createOrganisation(name, password);
+        }
     },
 })
