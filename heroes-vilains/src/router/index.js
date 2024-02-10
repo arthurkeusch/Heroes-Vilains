@@ -4,7 +4,7 @@ import HomeView from '../views/HomeView.vue';
 import ListTeamView from "@/views/ListTeamView.vue";
 import OrgaView from "@/views/OrgaView.vue";
 import LoginView from "@/views/LoginView.vue";
-import CurrentOrga from "@/components/CurrentOrga.vue";
+import CurrentOrga from "@/views/CurrentOrgaView.vue";
 import CurrentTeam from "@/components/CurrentTeam.vue";
 
 Vue.use(VueRouter);

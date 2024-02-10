@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {createOrganisation, getAllOrganisations} from "@/services/org.service";
+import {createOrganisation, getAllOrganisations, getOrganisationByID} from "@/services/org.service";
 
 Vue.use(Vuex)
 
@@ -61,7 +61,7 @@ export default new Vuex.Store({
             /*await new Promise( resolve => {
                 setTimeout(resolve, 1000)
             });*/ //Pour mettre une pause de 1 seconde
-            if (credentials.phrase === 'toto') {
+            if (credentials.phrase !== null) {
                 commit('setLogin', credentials.phrase);
             } else {
                 commit('setLogout');
@@ -75,6 +75,14 @@ export default new Vuex.Store({
 
         async createOrganisation(context, { name, password }) {
             return await createOrganisation(name, password);
+        },
+
+        async getOrganisationByID({commit, state}, idOrg) {
+            let answer = await getOrganisationByID(idOrg, state.passwordOrganisation);
+            if (answer.error === 0) {
+                commit('updateCurrentOrganisation', answer.data);
+            }
+            return answer;
         }
     },
 })

@@ -4,11 +4,18 @@
     <EventDialog
         :show="this.showDialogue"
         :width="'500px'"
-        title="Crée une organisation"
-        :show-button-o-k="true"
-        :show-button-fermer="true"
+        :title="this.errorDialog ? 'Erreur' : 'Crée une organisation'"
+        :show-button-o-k="this.showButtonOK"
+        :show-button-fermer="this.showButtonFermer"
         @closeDialog="closeDialogue">
-      <div>
+      <div v-if="this.errorDialog">
+        <v-card-text
+            v-if="this.errorText !== null"
+            class="warning">
+          {{ this.errorText }}
+        </v-card-text>
+      </div>
+      <div v-else>
         <v-text-field
             v-model="orgName"
             label="Nom"/>
@@ -19,7 +26,7 @@
         <v-card-text
             v-if="this.errorText !== null"
             class="warning">
-          Texte : {{this.errorText}}
+          {{ this.errorText }}
         </v-card-text>
       </div>
     </EventDialog>
@@ -67,7 +74,10 @@ export default {
       showDialogue: false,
       orgName: null,
       orgPass: null,
-      errorText: null
+      errorText: null,
+      errorDialog: false,
+      showButtonOK: null,
+      showButtonFermer: null
     };
   },
 
@@ -80,19 +90,31 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getAllOrganisations', 'createOrganisation']),
+    ...mapActions(['getAllOrganisations', 'createOrganisation', 'getOrganisationByID']),
 
-    goToOrganisation(id) {
-      console.log(id);
+    async goToOrganisation(id) {
+      let answer = await this.getOrganisationByID(id);
+      if (answer.error === 1) {
+        this.errorDialog = true;
+        this.showDialogue = true;
+        this.errorText = answer.data.data;
+        this.showButtonOK = false;
+        this.showButtonFermer = true;
+      } else {
+        await this.$router.push({name: 'currentOrga', params: {infoOrg: answer.data}});
+      }
     },
 
     createOrg() {
       this.showDialogue = true;
+      this.showButtonOK = true;
+      this.showButtonFermer = true;
+      this.errorDialog = false;
     },
 
     async closeDialogue(button) {
       if (button) {
-        let response = await this.createOrganisation({ name: this.orgName, password: this.orgPass });
+        let response = await this.createOrganisation({name: this.orgName, password: this.orgPass});
         if (response.data !== undefined && response.data.error !== 0) {
           this.errorText = response.data;
         } else {
@@ -104,6 +126,8 @@ export default {
         this.orgName = null;
         this.errorText = null;
         this.showDialogue = false;
+        this.showButtonOK = null;
+        this.showButtonFermer = null;
       }
     }
   }
