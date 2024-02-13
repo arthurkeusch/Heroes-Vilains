@@ -72,3 +72,8 @@ export default {
   }
 }
 </script>
+<style>
+h3{
+    margin-right: 40px;
+}
+</style>
