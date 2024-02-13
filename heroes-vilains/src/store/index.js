@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import {createOrganisation, getAllOrganisations, getOrganisationByID} from "@/services/org.service";
-import {getTeams} from "@/services/team.service";
+import {createTeam, getTeams} from "@/services/team.service";
 
 Vue.use(Vuex)
 
@@ -93,6 +93,10 @@ export default new Vuex.Store({
 
         updateCurrentTeam({commit}, team) {
             commit('updateCurrentTeam', team);
+        },
+
+        async createTeam(name) {
+            await createTeam(name);
         }
     },
 })
