@@ -63,7 +63,7 @@ import {mapActions, mapState} from 'vuex';
 import EventDialog from "@/components/EventDialog.vue";
 
 export default {
-  name: 'LoginView',
+  name: 'OrgaView',
 
   components: {
     EventDialog

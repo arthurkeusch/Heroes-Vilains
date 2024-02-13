@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import {createOrganisation, getAllOrganisations, getOrganisationByID} from "@/services/org.service";
+import {getTeams} from "@/services/team.service";
 
 Vue.use(Vuex)
 
@@ -83,6 +84,15 @@ export default new Vuex.Store({
                 commit('updateCurrentOrganisation', answer.data);
             }
             return answer;
+        },
+
+        async getAllTeam({commit}) {
+            let answer = await getTeams();
+            commit('updateListTeam', answer.data);
+        },
+
+        updateCurrentTeam({commit}, team) {
+            commit('updateCurrentTeam', team);
         }
     },
 })
