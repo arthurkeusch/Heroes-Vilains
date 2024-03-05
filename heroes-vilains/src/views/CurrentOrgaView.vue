@@ -35,6 +35,24 @@
 
     <h1>CurrentOrga : {{currentOrganisation}}</h1>
 
+    <div>
+        <v-row>
+            <v-col
+                    v-for="(team, index) in currentOrganisation[0].teams"
+                    :key="index"
+                    cols="3">
+                <v-card
+                        class="text-center light-blue d-flex justify-center"
+                        @click="addTeamByIDFromStore(team)">
+                    <v-card-title>
+                        {{ team.name }}
+                    </v-card-title>
+                </v-card>
+            </v-col>
+        </v-row>
+    </div>
+
+
     <v-container>
       <v-card
           class="text-center green d-flex justify-center"
