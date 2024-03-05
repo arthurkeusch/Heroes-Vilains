@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {createOrganisation, getAllOrganisations, getOrganisationByID} from "@/services/org.service";
+import {addTeam, createOrganisation, getAllOrganisations, getOrganisationByID} from "@/services/org.service";
 import {createTeam, getTeams} from "@/services/team.service";
 
 Vue.use(Vuex)
@@ -97,6 +97,12 @@ export default new Vuex.Store({
 
         async createTeam(name) {
             await createTeam(name);
+        },
+
+        async addTeamByID({state}, id_team) {
+            await addTeam(id_team, state.passwordOrganisation);
+            console.log(state.currentOrganisation['_id']);
+            await getOrganisationByID(state.currentOrganisation['_id'], state.passwordOrganisation);
         }
     },
 })
