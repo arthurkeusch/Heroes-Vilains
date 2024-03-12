@@ -78,10 +78,10 @@ export default new Vuex.Store({
             return await createOrganisation(name, password);
         },
 
-        async getOrganisationByID({commit, state}, idOrg) {
+        async getOrganisationByIDFromStore({commit, state}, idOrg) {
             let answer = await getOrganisationByID(idOrg, state.passwordOrganisation);
             if (answer.error === 0) {
-                commit('updateCurrentOrganisation', answer.data);
+                commit('updateCurrentOrganisation', answer.data[0]);
             }
             return answer;
         },
@@ -99,10 +99,13 @@ export default new Vuex.Store({
             await createTeam(name);
         },
 
-        async addTeamByID({state}, id_team) {
+        async addTeamByID({state, commit}, id_team) {
             await addTeam(id_team, state.passwordOrganisation);
-            console.log(state.currentOrganisation['_id']);
-            await getOrganisationByID(state.currentOrganisation['_id'], state.passwordOrganisation);
+            let answer = await getOrganisationByID(state.currentOrganisation['_id'], state.passwordOrganisation);
+            if (answer.error === 0) {
+                commit('updateCurrentOrganisation', answer.data[0]);
+            }
+            return answer;
         }
     },
 })

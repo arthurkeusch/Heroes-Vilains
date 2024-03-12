@@ -33,23 +33,23 @@
       </div>
     </EventDialog>
 
-    <h1>CurrentOrga : {{currentOrganisation}}</h1>
+    <h1>CurrentOrga : {{ currentOrganisation }}</h1>
 
     <div>
-        <v-row>
-            <v-col
-                    v-for="(team, index) in currentOrganisation[0].teams"
-                    :key="index"
-                    cols="3">
-                <v-card
-                        class="text-center light-blue d-flex justify-center"
-                        @click="addTeamByIDFromStore(team)">
-                    <v-card-title>
-                        {{ team.name }}
-                    </v-card-title>
-                </v-card>
-            </v-col>
-        </v-row>
+      <v-row>
+        <v-col
+            v-for="(team, index) in currentOrganisation.teams"
+            :key="index"
+            cols="3">
+          <v-card
+              class="text-center light-blue d-flex justify-center"
+              @click="addTeamByIDFromStore(team)">
+            <v-card-title>
+              {{ team.name }}
+            </v-card-title>
+          </v-card>
+        </v-col>
+      </v-row>
     </div>
 
 
@@ -103,9 +103,22 @@ export default {
     },
 
     addTeamByIDFromStore(team) {
-      console.log(team['_id']);
-      this.addTeamByID(team['_id'])
-      this.showDialogue = false;
+      if (this.teamIsInOrganisation(team['_id'])) {
+        this.errorDialog = true;
+        this.errorText = "Cette équipe est déjà dans l'organisation !";
+      } else {
+        this.addTeamByID(team['_id']);
+        this.showDialogue = false;
+      }
+    },
+
+    teamIsInOrganisation(id_team) {
+      for (let i = 0; i < this.currentOrganisation['teams'].length; i++) {
+        if (id_team === this.currentOrganisation['teams'][i]['_id']) {
+          return true;
+        }
+      }
+      return false;
     }
   }
 }

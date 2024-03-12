@@ -90,10 +90,10 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getAllOrganisations', 'createOrganisation', 'getOrganisationByID']),
+    ...mapActions(['getAllOrganisations', 'createOrganisation', 'getOrganisationByIDFromStore']),
 
     async goToOrganisation(id) {
-      let answer = await this.getOrganisationByID(id);
+      let answer = await this.getOrganisationByIDFromStore(id);
       if (answer.error === 1) {
         this.errorDialog = true;
         this.showDialogue = true;
