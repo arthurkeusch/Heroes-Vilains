@@ -39,7 +39,20 @@
               </v-card-title>
           </v-card>
       </v-container>
-
+<!--      <v-row>-->
+<!--          <v-col-->
+<!--                  v-for="(member, index) in listTeamMember"-->
+<!--                  :key="index"-->
+<!--                  cols="3">-->
+<!--              <v-card-->
+<!--                      class="text-center light-blue d-flex justify-center"-->
+<!--                      @click="goToOrganisation(organisation._id)">-->
+<!--                  <v-card-title>-->
+<!--                      {{ team.name }}-->
+<!--                  </v-card-title>-->
+<!--              </v-card>-->
+<!--          </v-col>-->
+<!--      </v-row>-->
   </div>
   <div v-else>
       <h1>choisissez d'abord une equipe !</h1>
@@ -70,11 +83,11 @@ export default {
     },
 
     computed: {
-        ...mapState(['listOrganisations'])
+        ...mapState(['listHeroAlias'])
     },
 
     methods: {
-        ...mapActions(['getAllOrganisations', 'createOrganisation', 'getOrganisationByID']),
+        ...mapActions(['getAliases', 'createOrganisation', 'getOrganisationByID']),
 
         addMembre() {
             this.showDialogue = true;
