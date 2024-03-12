@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {addTeam, createOrganisation, getAllOrganisations, getOrganisationByID} from "@/services/org.service";
+import {addTeam, removeTeam, createOrganisation, getAllOrganisations, getOrganisationByID} from "@/services/org.service";
 import {createTeam, getTeams} from "@/services/team.service";
 
 Vue.use(Vuex)
@@ -101,6 +101,14 @@ export default new Vuex.Store({
 
         async addTeamByID({state, commit}, id_team) {
             await addTeam(id_team, state.passwordOrganisation);
+            let answer = await getOrganisationByID(state.currentOrganisation['_id'], state.passwordOrganisation);
+            if (answer.error === 0) {
+                commit('updateCurrentOrganisation', answer.data[0]);
+            }
+            return answer;
+        },
+        async removeTeamByID({state, commit}, id_team) {
+            await removeTeam(id_team, state.passwordOrganisation);
             let answer = await getOrganisationByID(state.currentOrganisation['_id'], state.passwordOrganisation);
             if (answer.error === 0) {
                 commit('updateCurrentOrganisation', answer.data[0]);
