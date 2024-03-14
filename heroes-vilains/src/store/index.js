@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import {addTeam, removeTeam, createOrganisation, getAllOrganisations, getOrganisationByID} from "@/services/org.service";
 import {createTeam, getTeams} from "@/services/team.service";
+import {getHeroByID} from "@/services/hero.service";
 
 Vue.use(Vuex)
 
@@ -107,6 +108,7 @@ export default new Vuex.Store({
             }
             return answer;
         },
+
         async removeTeamByID({state, commit}, id_team) {
             await removeTeam(id_team, state.passwordOrganisation);
             let answer = await getOrganisationByID(state.currentOrganisation['_id'], state.passwordOrganisation);
@@ -114,6 +116,19 @@ export default new Vuex.Store({
                 commit('updateCurrentOrganisation', answer.data[0]);
             }
             return answer;
+        },
+
+        async getInfoHeroById({state, commit}) {
+            let listTemp = [];
+            for (let i = 0; i < state.currentTeam['members'].length; i++) {
+                let answer = await getHeroByID(state.currentTeam['members'][i], state.passwordOrganisation);
+                listTemp.push(answer.data[0]);
+            }
+            commit('updateListHeroAlias', listTemp);
+        },
+
+        setCurrentHero({commit}, hero) {
+            commit('updateCurrentHero', hero);
         }
     },
 })

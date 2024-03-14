@@ -41,7 +41,7 @@ export default {
       await this.login({phrase: this.phrase});
       this.loading = false;
       if (this.auth) {
-        await this.$router.push('/');
+        await this.$router.push('/organisation');
       } else {
         alert("Connection échouée !");
       }

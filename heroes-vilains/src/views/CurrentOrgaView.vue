@@ -49,7 +49,9 @@
       </div>
     </EventDialog>
 
+    <h1>Organisation actuelle : {{currentOrganisation.name}}</h1>
 
+    <h2>Liste des équipes :</h2>
     <div>
       <v-row>
         <v-col
@@ -58,7 +60,7 @@
             cols="3">
           <v-card
               class="text-center light-blue d-flex justify-center"
-              @click="addTeamByIDFromStore(team)">
+              @click="goToTeam(team)">
             <v-card-title>
               {{ team.name }}
             </v-card-title>
@@ -119,7 +121,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getAllTeam', 'addTeamByID']),
+    ...mapActions(['getAllTeam', 'addTeamByID', 'updateCurrentTeam']),
 
     async addTeam() {
       this.showDialogue = true;
@@ -166,6 +168,11 @@ export default {
         }
       }
       return false;
+    },
+
+    async goToTeam(team) {
+      this.updateCurrentTeam(team);
+      await this.$router.push({name: 'currentTeam'});
     }
   }
 }

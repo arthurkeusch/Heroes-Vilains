@@ -5,7 +5,8 @@ import ListTeamView from "@/views/ListTeamView.vue";
 import OrgaView from "@/views/OrgaView.vue";
 import LoginView from "@/views/LoginView.vue";
 import CurrentOrga from "@/views/CurrentOrgaView.vue";
-import CurrentTeam from "@/components/CurrentTeam.vue";
+import CurrentTeam from "@/views/CurrentTeam.vue";
+import CurrentHeroView from "@/views/CurrentHeroView.vue";
 
 Vue.use(VueRouter);
 
@@ -39,6 +40,11 @@ const routes = [
         path: '/team/current',
         name: 'currentTeam',
         component: CurrentTeam
+    },
+    {
+        path: '/hero/current',
+        name: 'currentHero',
+        component: CurrentHeroView
     }
 ];
 
