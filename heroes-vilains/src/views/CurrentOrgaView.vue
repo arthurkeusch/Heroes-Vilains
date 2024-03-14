@@ -5,7 +5,7 @@
         :show="this.showDialogue"
         :width="'1000px'"
         :title="this.errorDialog ? 'Erreur' : 'Ajouter/Supprimer une équipe'"
-        :show-button-o-k="true"
+        :show-button-o-k="false"
         :show-button-fermer="true"
         @closeDialog="closeDialogue">
       <div v-if="this.errorDialog">
@@ -15,6 +15,7 @@
           {{ this.errorText }}
         </v-card-text>
       </div>
+
       <div v-else-if="this.showDialogueAjouter">
         <v-row>
           <v-col
@@ -31,25 +32,26 @@
           </v-col>
         </v-row>
       </div>
+
       <div v-else-if="this.showDialogueSupprimer">
-          <v-row>
-              <v-col
-                      v-for="(team, index) in currentOrganisation.teams"
-                      :key="index"
-                      cols="3">
-                  <v-card
-                          class="text-center light-blue d-flex justify-center"
-                          @click="removeTeamByIDFromStore(team)">
-                      <v-card-title>
-                          {{ team.name }}
-                      </v-card-title>
-                  </v-card>
-              </v-col>
-          </v-row>
+        <v-row>
+          <v-col
+              v-for="(team, index) in currentOrganisation.teams"
+              :key="index"
+              cols="3">
+            <v-card
+                class="text-center light-blue d-flex justify-center"
+                @click="removeTeamByIDFromStore(team)">
+              <v-card-title>
+                {{ team.name }}
+              </v-card-title>
+            </v-card>
+          </v-col>
+        </v-row>
       </div>
     </EventDialog>
 
-    <h1>Organisation actuelle : {{currentOrganisation.name}}</h1>
+    <h1>Organisation actuelle : {{ currentOrganisation.name }}</h1>
 
     <h2>Liste des équipes :</h2>
     <div>
@@ -68,29 +70,29 @@
         </v-col>
       </v-row>
     </div>
-      <br>
-      <hr>
-<div style="display: flex">
-    <v-container>
-        <v-card
-                class="text-center green d-flex justify-center"
-                @click="addTeam()">
-            <v-card-title>
-                Ajouter une équipe
-            </v-card-title>
-        </v-card>
-    </v-container>
-    <v-container>
-        <v-card
-                class="text-center red d-flex justify-center"
-                @click="removeTeam()">
-            <v-card-title>
-                Supprimer une équipe
-            </v-card-title>
-        </v-card>
-    </v-container>
-</div>
 
+    <br>
+    <hr>
+    <div style="display: flex">
+      <v-container>
+        <v-card
+            class="text-center green d-flex justify-center"
+            @click="addTeam()">
+          <v-card-title>
+            Ajouter une équipe
+          </v-card-title>
+        </v-card>
+      </v-container>
+      <v-container>
+        <v-card
+            class="text-center red d-flex justify-center"
+            @click="removeTeam()">
+          <v-card-title>
+            Supprimer une équipe
+          </v-card-title>
+        </v-card>
+      </v-container>
+    </div>
 
   </v-container>
 </template>
@@ -130,11 +132,12 @@ export default {
       this.errorDialog = false;
       await this.getAllTeam();
     },
+
     async removeTeam() {
-        this.showDialogue = true;
-        this.showDialogueAjouter = false;
-        this.showDialogueSupprimer = true;
-        this.errorDialog = false;
+      this.showDialogue = true;
+      this.showDialogueAjouter = false;
+      this.showDialogueSupprimer = true;
+      this.errorDialog = false;
     },
 
     closeDialogue() {
@@ -152,13 +155,13 @@ export default {
     },
 
     removeTeamByIDFromStore(team) {
-        if (this.teamIsInOrganisation(team['_id'])) {
-            this.errorDialog = true;
-            this.errorText = "Vous ne pouvez pas supprimer cette équipe!";
-        } else {
-            this.removeTeamByID(team['id']);
-            this.showDialogue = false;
-        }
+      if (this.teamIsInOrganisation(team['_id'])) {
+        this.errorDialog = true;
+        this.errorText = "Vous ne pouvez pas supprimer cette équipe!";
+      } else {
+        this.removeTeamByID(team['id']);
+        this.showDialogue = false;
+      }
     },
 
     teamIsInOrganisation(id_team) {

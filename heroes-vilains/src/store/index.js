@@ -1,8 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {addTeam, removeTeam, createOrganisation, getAllOrganisations, getOrganisationByID} from "@/services/org.service";
-import {createTeam, getTeams} from "@/services/team.service";
-import {getHeroByID} from "@/services/hero.service";
+import {
+    addTeam,
+    createOrganisation,
+    getAllOrganisations,
+    getOrganisationByID,
+    removeTeam
+} from "@/services/org.service";
+import {addHeroes, createTeam, getTeams} from "@/services/team.service";
+import {createHero, getAliases, getHeroByID} from "@/services/hero.service";
 
 Vue.use(Vuex)
 
@@ -129,6 +135,22 @@ export default new Vuex.Store({
 
         setCurrentHero({commit}, hero) {
             commit('updateCurrentHero', hero);
+        },
+
+        async getAllHeroAlias() {
+            let answer = await getAliases();
+            return answer.data;
+        },
+
+        async createHeros(context, {publicName, realName, powers}) {
+            return await createHero(publicName, realName, powers);
+        },
+
+        async addHerosToTeam({state}, idHeros) {
+            console.log("Ajout team !")
+            let answer = await addHeroes(idHeros, state.currentOrganisation['_id']);
+            console.log(answer);
+            return answer.data;
         }
     },
 })

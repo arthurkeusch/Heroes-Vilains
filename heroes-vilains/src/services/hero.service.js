@@ -19,7 +19,9 @@ async function createHero(publicName, realName, powers) {
         publicName: publicName,
         realName: realName
     };
-    if (powers !== null) data.powers = powers;
+    if (powers !== undefined) {
+        if (powers.length !== 0) data.powers = powers;
+    }
     let answer = await createHeroFromAPI(data)
     return answer.data
 }
