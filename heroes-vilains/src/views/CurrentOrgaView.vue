@@ -123,7 +123,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getAllTeam', 'addTeamByID', 'updateCurrentTeam']),
+    ...mapActions(['getAllTeam', 'addTeamByID','removeTeamByID', 'updateCurrentTeam']),
 
     async addTeam() {
       this.showDialogue = true;
@@ -155,11 +155,11 @@ export default {
     },
 
     removeTeamByIDFromStore(team) {
-      if (this.teamIsInOrganisation(team['_id'])) {
+      if (!this.teamIsInOrganisation(team['_id'])) {
         this.errorDialog = true;
         this.errorText = "Vous ne pouvez pas supprimer cette équipe!";
       } else {
-        this.removeTeamByID(team['id']);
+        this.removeTeamByID(team['_id']);
         this.showDialogue = false;
       }
     },
@@ -167,7 +167,7 @@ export default {
     teamIsInOrganisation(id_team) {
       for (let i = 0; i < this.currentOrganisation['teams'].length; i++) {
         if (id_team === this.currentOrganisation['teams'][i]['_id']) {
-          return true;
+            return true;
         }
       }
       return false;
