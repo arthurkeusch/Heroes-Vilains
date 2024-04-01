@@ -11,6 +11,7 @@
           <b>Nom :</b> {{ power['name'] }}<br>
           <b>Type :</b> {{ power['type'] }}<br>
           <b>Niveau :</b> {{ power['level'] }}<br>
+          <v-btn @click="deletePower(index)">Supprimer</v-btn>
         </v-card-text>
       </v-card>
     </v-col>
@@ -30,6 +31,12 @@ export default {
     calculateColor(level) {
       const hue = ((100 - level) * 1.2).toFixed(0);
       return `hsl(${hue}, 100%, 50%)`;
+    },
+
+    deletePower(index) {
+      let tempPowersTab = this.powers;
+      tempPowersTab.splice(index, 1);
+      this.$emit('deletePower', tempPowersTab);
     }
   }
 };

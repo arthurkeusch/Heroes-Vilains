@@ -70,7 +70,7 @@
             </v-card>
 
             <v-card-title>Liste des pouvoirs : {{ this.powers.length }}</v-card-title>
-            <ListPower :powers="this.powers"/>
+            <ListPower :powers="this.powers" @deletePower="deletePower"/>
 
             <v-card-actions>
               <v-spacer></v-spacer>
@@ -204,7 +204,6 @@ export default {
   },
 
   async mounted() {
-    console.log(this.currentTeam)
     if (this.currentTeam == null) {
       await this.$router.push('/organisation/current');
     }
@@ -258,13 +257,9 @@ export default {
         return;
       }
       let answer = await this.createHeros({publicName: this.publicName, realName: this.realName, powers: this.powers});
-      console.log("ICI")
-      console.log(answer['_id'])
       if (!answer['_id']) {
         this.messageAlertCreate = answer.data;
       } else {
-        console.log("ICI")
-        console.log(answer['_id'])
         await this.addHerosToTeam(answer['_id']);
         this.closeDialogueCreer();
       }
@@ -338,6 +333,10 @@ export default {
     async deleteHeroFromStore(id) {
       await this.deleteHero({idHero: id});
       this.closeDialogueDelete();
+    },
+
+    deletePower(newPowersTab) {
+      this.powers = newPowersTab;
     }
   }
 }
