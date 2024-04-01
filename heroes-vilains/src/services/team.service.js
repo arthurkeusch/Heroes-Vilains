@@ -14,31 +14,32 @@ async function getTeams() {
 
 
 async function createTeamFromAPI(data) {
-    return postRequest('/teams/create',data, 'createTeam')
+    return postRequest('/teams/create',data, 'createTeam');
 }
 
 async function createTeam(name) {
     let data = {
         name : name
     };
-    let answer = await createTeamFromAPI(data)
-    return answer.data
+    let answer = await createTeamFromAPI(data);
+    return answer.data;
 }
 
 
 
 
-async function addHeroesFromAPI(data, ) {
-    return patchRequest('/teams/addheroes', data, 'addHeroes')
+async function addHeroesFromAPI(data) {
+    return patchRequest('/teams/addheroes', data, 'addHeroes');
 }
 
 async function addHeroes(idHeroes, idTeam) {
     let data = {
-        idHeroes: idHeroes,
+        idHeroes: [idHeroes],
         idTeam: idTeam
     };
-    let answer = await addHeroesFromAPI(data)
-    return answer.data
+    console.log(data)
+    let answer = await addHeroesFromAPI(data);
+    return answer.data;
 }
 
 
@@ -51,8 +52,8 @@ async function removeHeroes(idHeroes, idTeam) {
         idHeroes: idHeroes,
         idTeam: idTeam
     };
-    let answer = await removeHeroesFromAPI(data)
-    return answer.data
+    let answer = await removeHeroesFromAPI(data);
+    return answer.data;
 }
 
 

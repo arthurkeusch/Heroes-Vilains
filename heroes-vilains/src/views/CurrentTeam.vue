@@ -22,7 +22,7 @@
               cols="3">
             <v-card
                 class="text-center light-blue d-flex justify-center"
-                @click="this.addHeroFromStore(hero['_id'])">
+                @click="addHeroFromStore(hero['_id'])">
               <v-card-title>
                 {{ hero['publicName'] }}
               </v-card-title>
@@ -278,8 +278,9 @@ export default {
       });
     },
 
-    addHeroFromStore(id) {
-      this.addHerosToTeam(id);
+    async addHeroFromStore(id) {
+      await this.addHerosToTeam(id);
+      this.showDialogue = false;
     }
   }
 }

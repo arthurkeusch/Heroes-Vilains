@@ -146,11 +146,15 @@ export default new Vuex.Store({
             return await createHero(publicName, realName, powers);
         },
 
-        async addHerosToTeam({state}, idHeros) {
-            console.log("Ajout team !")
-            let answer = await addHeroes(idHeros, state.currentOrganisation['_id']);
-            console.log(answer);
-            return answer.data;
+        async addHerosToTeam({state, commit}, idHeros) {
+            let answer = await addHeroes(idHeros, state.currentTeam['_id']);
+            state.currentTeam = answer;
+            let listTemp = [];
+            for (let i = 0; i < state.currentTeam['members'].length; i++) {
+                answer = await getHeroByID(state.currentTeam['members'][i], state.passwordOrganisation);
+                listTemp.push(answer.data[0]);
+            }
+            commit('updateListHeroAlias', listTemp);
         }
     },
 })
