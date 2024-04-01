@@ -204,6 +204,10 @@ export default {
   },
 
   async mounted() {
+    console.log(this.currentTeam)
+    if (this.currentTeam == null) {
+      await this.$router.push('/organisation/current');
+    }
     await this.getInfoHeroById();
   },
 

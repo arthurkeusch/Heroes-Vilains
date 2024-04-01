@@ -122,6 +122,12 @@ export default {
     ...mapState(['currentOrganisation', 'listTeam'])
   },
 
+  mounted() {
+    if (this.currentOrganisation == null) {
+      this.$router.push("/organisation");
+    }
+  },
+
   methods: {
     ...mapActions(['getAllTeam', 'addTeamByID','removeTeamByID', 'updateCurrentTeam']),
 

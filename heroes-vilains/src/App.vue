@@ -8,7 +8,7 @@
           prominent>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-spacer></v-spacer>
-        <v-btn icon @click="redirect(4)">
+        <v-btn icon @click="redirect(6)">
           <h3>Login</h3>
         </v-btn>
       </v-app-bar>
@@ -25,11 +25,19 @@
               </v-list-item>
 
               <v-list-item>
-                <v-list-item-title @click="redirect(2)">Organisations</v-list-item-title>
+                <v-list-item-title @click="redirect(2)">Organisation courante</v-list-item-title>
               </v-list-item>
 
               <v-list-item>
-                <v-list-item-title @click="redirect(3)">Equipes</v-list-item-title>
+                <v-list-item-title @click="redirect(3)">Liste des organisations</v-list-item-title>
+              </v-list-item>
+
+              <v-list-item>
+                <v-list-item-title @click="redirect(4)">Equipe courante</v-list-item-title>
+              </v-list-item>
+
+              <v-list-item>
+                <v-list-item-title @click="redirect(5)">Liste des équipes</v-list-item-title>
               </v-list-item>
             </v-list-item-group>
           </v-list>
@@ -41,6 +49,8 @@
 </template>
 
 <script>
+import {mapState} from "vuex";
+
 export default {
   name: 'App',
 
@@ -57,15 +67,35 @@ export default {
     },
   },
 
+  computed: {
+    ...mapState(['currentTeam', 'currentOrganisation', 'passwordOrganisation'])
+  },
+
   methods: {
     async redirect(id) {
       if (id === 1 && this.$route.path !== '/') {
         await this.$router.push('/');
-      } else if (id === 2 && this.$route.path !== '/organisation') {
+      } else if (id === 2 && this.$route.path !== '/organisation/current') {
+        if (this.passwordOrganisation == null) {
+          await this.$router.push('/login');
+        } else if (this.currentOrganisation == null) {
+          await this.$router.push("/organisation");
+        } else {
+          await this.$router.push('/organisation/current');
+        }
+      } else if (id === 3 && this.$route.path !== '/organisation') {
         await this.$router.push('/organisation');
-      } else if (id === 3 && this.$route.path !== '/team/list') {
+      } else if (id === 4 && this.$route.path !== '/team/current') {
+        if (this.passwordOrganisation == null) {
+          await this.$router.push('/login');
+        } else if (this.currentTeam == null) {
+          await this.$router.push('/organisation/current');
+        } else {
+          await this.$router.push('/team/current');
+        }
+      } else if (id === 5 && this.$route.path !== '/team/list') {
         await this.$router.push('/team/list');
-      } else if (id === 4 && this.$route.path !== '/login') {
+      } else if (id === 6 && this.$route.path !== '/login') {
         await this.$router.push('/login');
       }
     }
