@@ -68,7 +68,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['currentTeam', 'currentOrganisation', 'passwordOrganisation'])
+    ...mapState(['currentTeam', 'currentOrganisation', 'passwordOrganisation', 'showErrorDialogue', 'errorDescr', 'errorTitle'])
   },
 
   methods: {

@@ -4,18 +4,11 @@
     <EventDialog
         :show="this.showDialogue"
         :width="'500px'"
-        :title="this.errorDialog ? 'Erreur' : 'Crée une organisation'"
+        title="Crée une organisation"
         :show-button-o-k="this.showButtonOK"
         :show-button-fermer="this.showButtonFermer"
         @closeDialog="closeDialogue">
-      <div v-if="this.errorDialog">
-        <v-card-text
-            v-if="this.errorText !== null"
-            class="warning">
-          {{ this.errorText }}
-        </v-card-text>
-      </div>
-      <div v-else>
+      <div>
         <v-text-field
             v-model="orgName"
             label="Nom"/>
@@ -95,11 +88,9 @@ export default {
     async goToOrganisation(id) {
       let answer = await this.getOrganisationByIDFromStore(id);
       if (answer.error === 1) {
-        this.errorDialog = true;
-        this.showDialogue = true;
-        this.errorText = answer.data.data;
-        this.showButtonOK = false;
-        this.showButtonFermer = true;
+        this.setShowErrorDialogue(true);
+        this.setErrorTitle("Acces à l'organisation impossible");
+        this.setErrorDescr(answer.data.data);
       } else {
         await this.$router.push({name: 'currentOrga', params: {infoOrg: answer.data}});
       }

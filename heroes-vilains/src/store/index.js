@@ -10,6 +10,10 @@ import {
 import {addHeroes, createTeam, getTeams, removeHeroes} from "@/services/team.service";
 import {createHero, getAliases, getHeroByID, updateHero} from "@/services/hero.service";
 
+import errorModule from '../store/error';
+import secretModule from '../store/secret';
+import userModule from '../store/user';
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -168,4 +172,10 @@ export default new Vuex.Store({
             commit("updateCurrentHero", answer);
         }
     },
+
+    modules: {
+        error: errorModule,
+        secret: secretModule,
+        user: userModule
+    }
 })
