@@ -83,6 +83,33 @@
     </EventDialog>
 
 
+
+    <EventDialog
+        :show="this.showDialogueDelete"
+        :width="'1000px'"
+        title="Supprimer un héros de l'équipe"
+        :show-button-o-k="false"
+        :show-button-fermer="true"
+        @closeDialog="closeDialogueDelete">
+      <div>
+        <v-row>
+          <v-col
+              v-for="(hero, index) in listHeroAlias"
+              :key="index"
+              cols="3">
+            <v-card
+                class="text-center light-blue d-flex justify-center"
+                @click="deleteHeroFromStore(hero['_id'])">
+              <v-card-title>
+                {{ hero['publicName'] }}
+              </v-card-title>
+            </v-card>
+          </v-col>
+        </v-row>
+      </div>
+    </EventDialog>
+
+
     <h1>Bienvenue sur l'équipe : {{ $store.state.currentTeam.name }}</h1>
 
     <h2>Liste des membres :</h2>
@@ -104,24 +131,36 @@
     </div>
 
     <br>
-    <v-container>
-      <v-card
-          class="text-center green d-flex justify-center"
-          @click="addMembre()">
-        <v-card-title>
-          Ajouter un membre à l'équipe
-        </v-card-title>
-      </v-card>
-    </v-container>
-    <v-container>
-      <v-card
-          class="text-center green d-flex justify-center"
-          @click="showDialogueCreerHero()">
-        <v-card-title>
-          Crée un héro
-        </v-card-title>
-      </v-card>
-    </v-container>
+
+    <div style="display: flex">
+      <v-container>
+        <v-card
+            class="text-center green d-flex justify-center"
+            @click="addMembre()">
+          <v-card-title>
+            Ajouter un membre à l'équipe
+          </v-card-title>
+        </v-card>
+      </v-container>
+      <v-container>
+        <v-card
+            class="text-center green d-flex justify-center"
+            @click="showDialogueCreerHero()">
+          <v-card-title>
+            Crée un héro
+          </v-card-title>
+        </v-card>
+      </v-container>
+      <v-container>
+        <v-card
+            class="text-center red d-flex justify-center"
+            @click="showDialogueSupprimerHero()">
+          <v-card-title>
+            Supprimer un héro de l'équipe
+          </v-card-title>
+        </v-card>
+      </v-container>
+    </div>
 
   </v-container>
 </template>
@@ -155,7 +194,8 @@ export default {
       powerLevel: null,
       messageAlert: null,
       messageAlertName: null,
-      messageAlertCreate: null
+      messageAlertCreate: null,
+      showDialogueDelete: false
     };
   },
 
@@ -168,7 +208,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['createOrganisation', 'getInfoHeroById', 'setCurrentHero', 'getAllHeroAlias', 'createHeros', 'addHerosToTeam']),
+    ...mapActions(['createOrganisation', 'getInfoHeroById', 'setCurrentHero', 'getAllHeroAlias', 'createHeros', 'addHerosToTeam', 'deleteHero']),
 
     async addMembre() {
       this.showDialogue = true;
@@ -281,6 +321,19 @@ export default {
     async addHeroFromStore(id) {
       await this.addHerosToTeam(id);
       this.showDialogue = false;
+    },
+
+    showDialogueSupprimerHero() {
+      this.showDialogueDelete = true;
+    },
+
+    closeDialogueDelete() {
+      this.showDialogueDelete = false;
+    },
+
+    async deleteHeroFromStore(id) {
+      await this.deleteHero({idHero: id});
+      this.closeDialogueDelete();
     }
   }
 }

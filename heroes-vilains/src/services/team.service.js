@@ -28,6 +28,7 @@ async function createTeam(name) {
 
 
 
+
 async function addHeroesFromAPI(data) {
     return patchRequest('/teams/addheroes', data, 'addHeroes');
 }
@@ -37,10 +38,12 @@ async function addHeroes(idHeroes, idTeam) {
         idHeroes: [idHeroes],
         idTeam: idTeam
     };
-    console.log(data)
     let answer = await addHeroesFromAPI(data);
     return answer.data;
 }
+
+
+
 
 
 async function removeHeroesFromAPI(data) {
@@ -55,6 +58,7 @@ async function removeHeroes(idHeroes, idTeam) {
     let answer = await removeHeroesFromAPI(data);
     return answer.data;
 }
+
 
 
 

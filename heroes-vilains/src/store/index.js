@@ -1,5 +1,5 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 import {
     addTeam,
     createOrganisation,
@@ -7,12 +7,13 @@ import {
     getOrganisationByID,
     removeTeam
 } from "@/services/org.service";
-import {addHeroes, createTeam, getTeams} from "@/services/team.service";
+import {addHeroes, createTeam, getTeams, removeHeroes} from "@/services/team.service";
 import {createHero, getAliases, getHeroByID} from "@/services/hero.service";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
+
     state: {
         auth: false,
         passwordOrganisation: null,
@@ -81,7 +82,7 @@ export default new Vuex.Store({
             commit('updateListOrganisations', listOrganisation.data);
         },
 
-        async createOrganisation(context, { name, password }) {
+        async createOrganisation(context, {name, password}) {
             return await createOrganisation(name, password);
         },
 
@@ -148,13 +149,18 @@ export default new Vuex.Store({
 
         async addHerosToTeam({state, commit}, idHeros) {
             let answer = await addHeroes(idHeros, state.currentTeam['_id']);
-            state.currentTeam = answer;
+            commit('updateCurrentTeam', answer);
             let listTemp = [];
             for (let i = 0; i < state.currentTeam['members'].length; i++) {
                 answer = await getHeroByID(state.currentTeam['members'][i], state.passwordOrganisation);
                 listTemp.push(answer.data[0]);
             }
             commit('updateListHeroAlias', listTemp);
+        },
+
+        async deleteHero({state, commit}, idHero) {
+            let answer = await removeHeroes(idHero, state.currentTeam['_id']);
+            commit("updateCurrentTeam", answer);
         }
     },
 })
