@@ -68,7 +68,6 @@ export default {
       orgName: null,
       orgPass: null,
       errorText: null,
-      errorDialog: false,
       showButtonOK: null,
       showButtonFermer: null
     };
@@ -100,7 +99,6 @@ export default {
       this.showDialogue = true;
       this.showButtonOK = true;
       this.showButtonFermer = true;
-      this.errorDialog = false;
     },
 
     async closeDialogue(button) {
