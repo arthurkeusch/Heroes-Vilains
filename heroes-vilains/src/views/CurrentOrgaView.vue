@@ -129,7 +129,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getAllTeam', 'addTeamByID','removeTeamByID', 'updateCurrentTeam']),
+    ...mapActions(['getAllTeam', 'addTeamByID','removeTeamByID', 'updateCurrentTeam','setShowErrorDialogue', 'setErrorDescr', 'setErrorTitle']),
 
     async addTeam() {
       this.showDialogue = true;
@@ -143,7 +143,6 @@ export default {
       this.showDialogue = true;
       this.showDialogueAjouter = false;
       this.showDialogueSupprimer = true;
-      this.errorDialog = false;
     },
 
     closeDialogue() {
@@ -152,8 +151,9 @@ export default {
 
     addTeamByIDFromStore(team) {
       if (this.teamIsInOrganisation(team['_id'])) {
-        this.errorDialog = true;
-        this.errorText = "Cette équipe est déjà dans l'organisation !";
+        this.setShowErrorDialogue(true);
+        this.setErrorTitle("Ajout impossible");
+        this.setErrorDescr("Vous ne pouvez pas ajouter cette équipe!");
       } else {
         this.addTeamByID(team['_id']);
         this.showDialogue = false;
@@ -162,8 +162,9 @@ export default {
 
     removeTeamByIDFromStore(team) {
       if (!this.teamIsInOrganisation(team['_id'])) {
-        this.errorDialog = true;
-        this.errorText = "Vous ne pouvez pas supprimer cette équipe!";
+        this.setShowErrorDialogue(true);
+        this.setErrorTitle("Suppression impossible");
+        this.setErrorDescr("Vous ne pouvez pas supprimer cette équipe!");
       } else {
         this.removeTeamByID(team['_id']);
         this.showDialogue = false;
