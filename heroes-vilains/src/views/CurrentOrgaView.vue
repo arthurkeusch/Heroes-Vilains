@@ -129,7 +129,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getAllTeam', 'addTeamByID','removeTeamByID', 'updateCurrentTeam','setShowErrorDialogue', 'setErrorDescr', 'setErrorTitle']),
+    ...mapActions(['getAllTeam', 'addTeamByID', 'removeTeamByID', 'updateCurrentTeam', 'setShowErrorDialogue', 'setErrorDescr', 'setErrorTitle']),
 
     async addTeam() {
       this.showDialogue = true;
@@ -174,7 +174,7 @@ export default {
     teamIsInOrganisation(id_team) {
       for (let i = 0; i < this.currentOrganisation['teams'].length; i++) {
         if (id_team === this.currentOrganisation['teams'][i]['_id']) {
-            return true;
+          return true;
         }
       }
       return false;

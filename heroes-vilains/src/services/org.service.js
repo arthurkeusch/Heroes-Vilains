@@ -11,7 +11,7 @@ async function getAllOrganisations() {
 
 
 async function createOrganisationFromAPI(data) {
-    return postRequest('/orgs/create', data, 'createOrganisation')
+    return postRequest('/orgs/create', data, 'createOrganisation');
 }
 
 async function createOrganisation(name, secret) {
@@ -19,43 +19,43 @@ async function createOrganisation(name, secret) {
         name: name,
         secret: secret
     };
-    let answer = await createOrganisationFromAPI(data)
-    return answer.data
+    let answer = await createOrganisationFromAPI(data);
+    return answer.data;
 }
 
 
-async function addTeamFromAPI(data, orgSecret) {
-    return patchRequest('/orgs/addteam?org-secret=' + orgSecret, data, 'addTeam')
+async function addTeamFromAPI(data) {
+    return patchRequest('/orgs/addteam', data, 'addTeam');
 }
 
-async function addTeam(id, orgSecret) {
+async function addTeam(id) {
     let data = {
         idTeam: id
     };
-    let answer = await addTeamFromAPI(data, orgSecret)
-    return answer.data
+    let answer = await addTeamFromAPI(data);
+    return answer.data;
 }
 
 
-async function removeTeamFromAPI(data, orgSecret) {
-    return patchRequest('/orgs/removeteam?org-secret=' + orgSecret, data, 'removeTeam')
+async function removeTeamFromAPI(data) {
+    return patchRequest('/orgs/removeteam', data, 'removeTeam');
 }
 
-async function removeTeam(id, orgSecret) {
+async function removeTeam(id) {
     let data = {
         idTeam: id
     };
-    let answer = await removeTeamFromAPI(data, orgSecret)
-    return answer.data
+    let answer = await removeTeamFromAPI(data);
+    return answer.data;
 }
 
 
-async function getOrganisationByIDFromAPI(id, orgSecret) {
-    return getRequest('/orgs/getbyid/' + id + '?org-secret=' + orgSecret, 'getOrganisationByID');
+async function getOrganisationByIDFromAPI(id) {
+    return getRequest('/orgs/getbyid/' + id, 'getOrganisationByID');
 }
 
-async function getOrganisationByID(id, orgSecret) {
-    let answer = await getOrganisationByIDFromAPI(id, orgSecret);
+async function getOrganisationByID(id) {
+    let answer = await getOrganisationByIDFromAPI(id);
     return answer.data;
 }
 

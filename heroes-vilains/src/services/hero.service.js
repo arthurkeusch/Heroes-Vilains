@@ -11,7 +11,7 @@ async function getAliases() {
 
 
 async function createHeroFromAPI(data) {
-    return postRequest('/heroes/create', data, 'createHero')
+    return postRequest('/heroes/create', data, 'createHero');
 }
 
 async function createHero(publicName, realName, powers) {
@@ -22,33 +22,33 @@ async function createHero(publicName, realName, powers) {
     if (powers !== undefined) {
         if (powers.length !== 0) data.powers = powers;
     }
-    let answer = await createHeroFromAPI(data)
-    return answer.data
+    let answer = await createHeroFromAPI(data);
+    return answer.data;
 }
 
 
-async function updateHeroFromAPI(data, orgSecret) {
-    return putRequest('/heroes/update?org-secret=' + orgSecret, data, 'updateHero')
+async function updateHeroFromAPI(data) {
+    return putRequest('/heroes/update', data, 'updateHero');
 }
 
-async function updateHero(id, publicName, realName, powers, orgSecret) {
+async function updateHero(id, publicName, realName, powers) {
     let data = {
         _id: id
     };
     if (publicName !== null) data.publicName = publicName;
     if (realName !== null) data.realName = realName;
     if (powers !== null) data.powers = powers;
-    let answer = await updateHeroFromAPI(data, orgSecret)
-    return answer.data
+    let answer = await updateHeroFromAPI(data);
+    return answer.data;
 }
 
 
-async function getHeroByIDFromAPI(id, orgSecret) {
-    return getRequest('/heroes/getbyid/' + id + '?org-secret=' + orgSecret, 'getHeroByID');
+async function getHeroByIDFromAPI(id) {
+    return getRequest('/heroes/getbyid/' + id, 'getHeroByID');
 }
 
-async function getHeroByID(id, orgSecret) {
-    let answer = await getHeroByIDFromAPI(id, orgSecret);
+async function getHeroByID(id) {
+    let answer = await getHeroByIDFromAPI(id);
     return answer.data;
 }
 

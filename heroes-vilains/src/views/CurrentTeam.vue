@@ -83,7 +83,6 @@
     </EventDialog>
 
 
-
     <EventDialog
         :show="this.showDialogueDelete"
         :width="'1000px'"

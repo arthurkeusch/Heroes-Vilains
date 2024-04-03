@@ -7,8 +7,18 @@ import {
     getOrganisationByID,
     removeTeam
 } from "@/services/org.service";
-import {addHeroes, createTeam, getTeams, removeHeroes} from "@/services/team.service";
-import {createHero, getAliases, getHeroByID, updateHero} from "@/services/hero.service";
+import {
+    addHeroes,
+    createTeam,
+    getTeams,
+    removeHeroes
+} from "@/services/team.service";
+import {
+    createHero,
+    getAliases,
+    getHeroByID,
+    updateHero
+} from "@/services/hero.service";
 
 import errorModule from '../store/error';
 import secretModule from '../store/secret';
@@ -71,9 +81,9 @@ export default new Vuex.Store({
 
     actions: {
         async login({commit}, credentials) {
-            /*await new Promise( resolve => {
-                setTimeout(resolve, 1000)
-            });*/ //Pour mettre une pause de 1 seconde
+            await new Promise(resolve => {
+                setTimeout(resolve, 1000);
+            });
             if (credentials.phrase !== null) {
                 commit('setLogin', credentials.phrase);
             } else {
@@ -90,8 +100,8 @@ export default new Vuex.Store({
             return await createOrganisation(name, password);
         },
 
-        async getOrganisationByIDFromStore({commit, state}, idOrg) {
-            let answer = await getOrganisationByID(idOrg, state.passwordOrganisation);
+        async getOrganisationByIDFromStore({commit}, idOrg) {
+            let answer = await getOrganisationByID(idOrg);
             if (answer.error === 0) {
                 commit('updateCurrentOrganisation', answer.data[0]);
             }
@@ -112,8 +122,8 @@ export default new Vuex.Store({
         },
 
         async addTeamByID({state, commit}, id_team) {
-            await addTeam(id_team, state.passwordOrganisation);
-            let answer = await getOrganisationByID(state.currentOrganisation['_id'], state.passwordOrganisation);
+            await addTeam(id_team);
+            let answer = await getOrganisationByID(state.currentOrganisation['_id']);
             if (answer.error === 0) {
                 commit('updateCurrentOrganisation', answer.data[0]);
             }
@@ -121,8 +131,8 @@ export default new Vuex.Store({
         },
 
         async removeTeamByID({state, commit}, id_team) {
-            await removeTeam(id_team, state.passwordOrganisation);
-            let answer = await getOrganisationByID(state.currentOrganisation['_id'], state.passwordOrganisation);
+            await removeTeam(id_team);
+            let answer = await getOrganisationByID(state.currentOrganisation['_id']);
             if (answer.error === 0) {
                 commit('updateCurrentOrganisation', answer.data[0]);
             }
@@ -132,7 +142,7 @@ export default new Vuex.Store({
         async getInfoHeroById({state, commit}) {
             let listTemp = [];
             for (let i = 0; i < state.currentTeam['members'].length; i++) {
-                let answer = await getHeroByID(state.currentTeam['members'][i], state.passwordOrganisation);
+                let answer = await getHeroByID(state.currentTeam['members'][i]);
                 listTemp.push(answer.data[0]);
             }
             commit('updateListHeroAlias', listTemp);
@@ -156,7 +166,7 @@ export default new Vuex.Store({
             commit('updateCurrentTeam', answer);
             let listTemp = [];
             for (let i = 0; i < state.currentTeam['members'].length; i++) {
-                answer = await getHeroByID(state.currentTeam['members'][i], state.passwordOrganisation);
+                answer = await getHeroByID(state.currentTeam['members'][i]);
                 listTemp.push(answer.data[0]);
             }
             commit('updateListHeroAlias', listTemp);
@@ -167,8 +177,8 @@ export default new Vuex.Store({
             commit("updateCurrentTeam", answer);
         },
 
-        async updateHero({state, commit}, hero) {
-            let answer = await updateHero(hero['_id'], hero['publicName'], hero['realName'], hero['powers'], state.passwordOrganisation);
+        async updateHero({commit}, hero) {
+            let answer = await updateHero(hero['_id'], hero['publicName'], hero['realName'], hero['powers']);
             commit("updateCurrentHero", answer);
         }
     },

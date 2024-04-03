@@ -31,7 +31,7 @@
                 <v-text-field v-model="powerLevel" label="Niveau du pouvoir (entre 0 et 100)"></v-text-field>
               </v-card-text>
               <v-card-actions>
-                <v-spacer></v-spacer>
+                <v-spacer/>
                 <v-btn @click="addPower">Ajouter le pouvoir</v-btn>
               </v-card-actions>
             </v-card>
@@ -40,7 +40,7 @@
             <ListPower :powers="this.powers"/>
 
             <v-card-actions>
-              <v-spacer></v-spacer>
+              <v-spacer/>
               <v-card-text v-if="this.messageAlertCreate" class="warning">{{ this.messageAlertCreate }}</v-card-text>
               <v-btn @click="updateHeroFromStore">Modifier le héro</v-btn>
             </v-card-actions>
