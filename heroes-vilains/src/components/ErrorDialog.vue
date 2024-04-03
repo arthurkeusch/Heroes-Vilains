@@ -1,16 +1,16 @@
 <template>
   <v-dialog
-      :value="/*this.$store.state.showErrorDialogue*/ true"
+      :value="this.$store.state.error.showErrorDialogue"
       persistent
       :max-width="500"
       :retain-focus="false"
   >
     <v-card>
       <v-card-title class="headline">
-        {{ this.$store.state.errorTitle }}
+        {{ this.$store.state.error.errorTitle }}
       </v-card-title>
       <v-card-text>
-        {{ this.$store.state.errorDescr }}
+        {{ this.$store.state.error.errorDescr }}
       </v-card-text>
 
       <v-card-actions>

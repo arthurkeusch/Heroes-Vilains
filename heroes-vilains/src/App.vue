@@ -1,5 +1,6 @@
 <template>
   <v-app class="mx-auto overflow-hidden">
+    <ErrorDialog/>
 
     <v-main>
       <v-app-bar
@@ -49,15 +50,20 @@
 </template>
 
 <script>
-import {mapState} from "vuex";
+import {mapActions, mapState} from "vuex";
+import ErrorDialog from "@/components/ErrorDialog.vue";
 
 export default {
   name: 'App',
 
+  components: {
+    ErrorDialog
+  },
+
   data() {
     return {
       drawer: false,
-      group: null
+      group: null,
     }
   },
 
@@ -72,6 +78,8 @@ export default {
   },
 
   methods: {
+    ...mapActions(['setShowErrorDialogue', 'setErrorDescr', 'setErrorTitle']),
+
     async redirect(id) {
       if (id === 1 && this.$route.path !== '/') {
         await this.$router.push('/');

@@ -31,10 +31,6 @@ export default {
 
         setErrorDescr({commit}, descr){
             commit('updateErrorDescr', descr);
-        },
-
-        getShowErrorDialogue({state}) {
-            return state.showErrorDialogue;
         }
     },
 }

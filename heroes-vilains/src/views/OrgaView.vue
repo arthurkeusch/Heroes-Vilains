@@ -83,7 +83,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getAllOrganisations', 'createOrganisation', 'getOrganisationByIDFromStore']),
+    ...mapActions(['getAllOrganisations', 'createOrganisation', 'getOrganisationByIDFromStore','setShowErrorDialogue', 'setErrorDescr', 'setErrorTitle']),
 
     async goToOrganisation(id) {
       let answer = await this.getOrganisationByIDFromStore(id);
