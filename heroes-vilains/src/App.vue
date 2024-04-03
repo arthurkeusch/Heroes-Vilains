@@ -1,12 +1,10 @@
 <template>
   <v-app class="mx-auto overflow-hidden">
+
     <ErrorDialog/>
 
     <v-main>
-      <v-app-bar
-          height="70"
-          dark
-          prominent>
+      <v-app-bar height="70" dark prominent>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-spacer></v-spacer>
         <v-btn icon @click="redirect(6)">
@@ -24,19 +22,15 @@
               <v-list-item>
                 <v-list-item-title @click="redirect(1)">Accueil</v-list-item-title>
               </v-list-item>
-
               <v-list-item>
                 <v-list-item-title @click="redirect(2)">Organisation courante</v-list-item-title>
               </v-list-item>
-
               <v-list-item>
                 <v-list-item-title @click="redirect(3)">Liste des organisations</v-list-item-title>
               </v-list-item>
-
               <v-list-item>
                 <v-list-item-title @click="redirect(4)">Equipe courante</v-list-item-title>
               </v-list-item>
-
               <v-list-item>
                 <v-list-item-title @click="redirect(5)">Liste des équipes</v-list-item-title>
               </v-list-item>
@@ -44,8 +38,8 @@
           </v-list>
         </v-navigation-drawer>
       </div>
-    </v-main>
 
+    </v-main>
   </v-app>
 </template>
 
@@ -86,8 +80,14 @@ export default {
       } else if (id === 2 && this.$route.path !== '/organisation/current') {
         if (this.passwordOrganisation == null) {
           await this.$router.push('/login');
+          this.setShowErrorDialogue(true);
+          this.setErrorTitle("Accès non autorisé");
+          this.setErrorDescr("Vous devez être connectez à une organisation pour accéder à cette section.");
         } else if (this.currentOrganisation == null) {
           await this.$router.push("/organisation");
+          this.setShowErrorDialogue(true);
+          this.setErrorTitle("Accès non autorisé");
+          this.setErrorDescr("Vous devez d'abord sélectionner une organisation.");
         } else {
           await this.$router.push('/organisation/current');
         }
@@ -96,8 +96,14 @@ export default {
       } else if (id === 4 && this.$route.path !== '/team/current') {
         if (this.passwordOrganisation == null) {
           await this.$router.push('/login');
+          this.setShowErrorDialogue(true);
+          this.setErrorTitle("Accès non autorisé");
+          this.setErrorDescr("Vous devez être connectez à une organisation pour accéder à cette section.");
         } else if (this.currentTeam == null) {
           await this.$router.push('/organisation/current');
+          this.setShowErrorDialogue(true);
+          this.setErrorTitle("Accès non autorisé");
+          this.setErrorDescr("Vous devez d'abord sélectionner une équipe.");
         } else {
           await this.$router.push('/team/current');
         }
@@ -111,7 +117,7 @@ export default {
 }
 </script>
 <style>
-h3{
-    margin-right: 40px;
+h3 {
+  margin-right: 40px;
 }
 </style>
