@@ -108,14 +108,10 @@ export default {
   },
 
   mounted() {
-    if (this.currentHero == null) {
-      this.$router.push("/team/current");
-    } else {
-      this.publicName = this.currentHero['publicName'];
-      this.realName = this.currentHero['realName'];
-      this.powers = this.currentHero['powers'];
-      this.idHero = this.currentHero['_id'];
-    }
+    this.publicName = this.currentHero['publicName'];
+    this.realName = this.currentHero['realName'];
+    this.powers = this.currentHero['powers'];
+    this.idHero = this.currentHero['_id'];
   },
 
   methods: {

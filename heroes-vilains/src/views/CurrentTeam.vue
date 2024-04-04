@@ -203,9 +203,6 @@ export default {
   },
 
   async mounted() {
-    if (this.currentTeam == null) {
-      await this.$router.push('/organisation/current');
-    }
     await this.getInfoHeroById();
   },
 

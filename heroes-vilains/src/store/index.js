@@ -20,9 +20,9 @@ import {
     updateHero
 } from "@/services/hero.service";
 
-import errorModule from '../store/error';
-import secretModule from '../store/secret';
-import userModule from '../store/user';
+import error from '../store/error';
+import secret from '../store/secret';
+import user from '../store/user';
 
 Vue.use(Vuex);
 
@@ -76,6 +76,18 @@ export default new Vuex.Store({
         setLogout(state) {
             state.auth = false;
             state.passwordOrganisation = null;
+        },
+
+        updateShowErrorDialogue(state, isShow){
+            state.error.showErrorDialogue = isShow;
+        },
+
+        updateErrorTitle(state, title){
+            state.error.errorTitle = title;
+        },
+
+        updateErrorDescr(state, descr){
+            state.errorDescr = descr;
         }
     },
 
@@ -184,8 +196,8 @@ export default new Vuex.Store({
     },
 
     modules: {
-        error: errorModule,
-        secret: secretModule,
-        user: userModule
+        error,
+        secret,
+        user
     }
 })
