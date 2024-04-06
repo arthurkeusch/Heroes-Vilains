@@ -107,15 +107,22 @@ export default {
     ...mapState(['currentHero'])
   },
 
-  mounted() {
-    this.publicName = this.currentHero['publicName'];
-    this.realName = this.currentHero['realName'];
-    this.powers = this.currentHero['powers'];
-    this.idHero = this.currentHero['_id'];
+  created() {
+    this.getInfoHero();
   },
 
   methods: {
-    ...mapActions(['updateHero']),
+    ...mapActions(['updateHero', "updateHeroUser"]),
+
+    getInfoHero() {
+      if (this.$store.state.user.authUser) {
+        this.$store.state.currentHero = this.$store.state.user.heroUser;
+      }
+      this.publicName = this.currentHero['publicName'];
+      this.realName = this.currentHero['realName'];
+      this.powers = this.currentHero['powers'];
+      this.idHero = this.currentHero['_id'];
+    },
 
     showDialogueUpdate() {
       this.showDialogue = true;
@@ -140,7 +147,17 @@ export default {
         realName: this.realName,
         powers: this.powers
       }
-      await this.updateHero(hero);
+      if (this.$store.state.user.authUser) {
+        const answer = await this.updateHeroUser(hero);
+        if (answer === 1) {
+          this.setShowErrorDialogue(true);
+          this.setErrorTitle("Modification impossible");
+          this.setErrorDescr("L'API n'a pas fonctionnée comme prévu. Les modifications n'on pas été effectuées.");
+        }
+        this.getInfoHero();
+      } else {
+        await this.updateHero(hero);
+      }
       this.closeDialogueUpdate();
     },
 

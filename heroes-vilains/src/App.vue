@@ -7,9 +7,27 @@
       <v-app-bar height="70" dark prominent>
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <v-spacer></v-spacer>
-        <v-btn icon @click="redirect(6)">
-          <h3>Login</h3>
-        </v-btn>
+        <v-menu offset-y>
+          <template v-slot:activator="{ on }">
+            <v-btn dark icon v-on="on">
+              <v-icon>mdi-account</v-icon>
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-item @click="redirect(6)">
+              <v-list-item-icon>
+                <v-icon>mdi-account-group</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>Login organisation</v-list-item-title>
+            </v-list-item>
+            <v-list-item @click="redirect(8)">
+              <v-list-item-icon>
+                <v-icon>mdi-account</v-icon>
+              </v-list-item-icon>
+              <v-list-item-title>Login hero</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </v-app-bar>
 
       <div style="display: flex">
@@ -36,6 +54,9 @@
               </v-list-item>
               <v-list-item>
                 <v-list-item-title @click="redirect(7)">Page d'erreur 404</v-list-item-title>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title @click="redirect(9)">Héro courant</v-list-item-title>
               </v-list-item>
             </v-list-item-group>
           </v-list>
@@ -90,6 +111,10 @@ export default {
         await this.$router.push('/login');
       } else if (id === 7 && this.$route.path !== '/404') {
         await this.$router.push('/404');
+      } else if (id === 8 && this.$route.path !== '/login/hero') {
+        await this.$router.push('/login/hero');
+      } else if (id === 9 && this.$route.path !== '/hero/current') {
+        await this.$router.push('/hero/current');
       }
     }
   }

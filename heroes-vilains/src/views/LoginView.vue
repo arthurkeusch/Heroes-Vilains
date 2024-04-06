@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card>
-      <v-card-title>Connexion</v-card-title>
+      <v-card-title>Connexion organisation</v-card-title>
 
       <v-card-text>
         <v-text-field v-model="phrase" label="Phrase secrète"></v-text-field>
@@ -41,6 +41,7 @@ export default {
       await this.login({phrase: this.phrase});
       this.loading = false;
       if (this.auth) {
+        this.$store.state.user.authUser = false;
         await this.$router.push('/organisation');
       } else {
         alert("Connection échouée !");

@@ -1,7 +1,7 @@
 import {getRequest, postRequest, putRequest} from "./axios.service";
 
 async function getAliasesFromAPI() {
-    return getRequest('/heroes/getaliases', 'getAliases');
+    return getRequest('/herocorp/heroes/getaliases', 'getAliases');
 }
 
 async function getAliases() {
@@ -11,7 +11,7 @@ async function getAliases() {
 
 
 async function createHeroFromAPI(data) {
-    return postRequest('/heroes/create', data, 'createHero');
+    return postRequest('/herocorp/heroes/create', data, 'createHero');
 }
 
 async function createHero(publicName, realName, powers) {
@@ -28,7 +28,7 @@ async function createHero(publicName, realName, powers) {
 
 
 async function updateHeroFromAPI(data) {
-    return putRequest('/heroes/update', data, 'updateHero');
+    return putRequest('/herocorp/heroes/update', data, 'updateHero');
 }
 
 async function updateHero(id, publicName, realName, powers) {
@@ -44,7 +44,7 @@ async function updateHero(id, publicName, realName, powers) {
 
 
 async function getHeroByIDFromAPI(id) {
-    return getRequest('/heroes/getbyid/' + id, 'getHeroByID');
+    return getRequest('/herocorp/heroes/getbyid/' + id, 'getHeroByID');
 }
 
 async function getHeroByID(id) {

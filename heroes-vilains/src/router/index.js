@@ -9,6 +9,7 @@ import CurrentTeam from "@/views/CurrentTeam.vue";
 import CurrentHeroView from "@/views/CurrentHeroView.vue";
 import store from "@/store";
 import Error404 from "@/views/Error404.vue";
+import HerosLoginView from "@/views/HerosLoginView.vue";
 
 Vue.use(VueRouter);
 
@@ -70,6 +71,14 @@ const routes = [
         }
     },
     {
+        path: '/login/hero',
+        name: 'loginHero',
+        component: HerosLoginView,
+        meta: {
+            levelAuth: 0
+        }
+    },
+    {
         path:'/404',
         name:'errorPage404',
         component: Error404,
@@ -90,7 +99,15 @@ const router = new VueRouter({
 });
 
 function checkAccess(to) {
-    return !(to.meta.levelAuth === 1 && !store.state.auth);
+    if (to.meta.levelAuth === 1) {
+        if (store.state.auth || store.state.user.authUser) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return true;
+    }
 }
 
 router.beforeEach((to, from, next) => {

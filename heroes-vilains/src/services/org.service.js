@@ -1,7 +1,7 @@
 import {getRequest, patchRequest, postRequest} from "./axios.service";
 
 async function getAllOrganisationsFromAPI() {
-    return getRequest('/orgs/get', 'getAllOrganisations');
+    return getRequest('/herocorp/orgs/get', 'getAllOrganisations');
 }
 
 async function getAllOrganisations() {
@@ -11,7 +11,7 @@ async function getAllOrganisations() {
 
 
 async function createOrganisationFromAPI(data) {
-    return postRequest('/orgs/create', data, 'createOrganisation');
+    return postRequest('/herocorp/orgs/create', data, 'createOrganisation');
 }
 
 async function createOrganisation(name, secret) {
@@ -25,7 +25,7 @@ async function createOrganisation(name, secret) {
 
 
 async function addTeamFromAPI(data) {
-    return patchRequest('/orgs/addteam', data, 'addTeam');
+    return patchRequest('/herocorp/orgs/addteam', data, 'addTeam');
 }
 
 async function addTeam(id) {
@@ -38,7 +38,7 @@ async function addTeam(id) {
 
 
 async function removeTeamFromAPI(data) {
-    return patchRequest('/orgs/removeteam', data, 'removeTeam');
+    return patchRequest('/herocorp/orgs/removeteam', data, 'removeTeam');
 }
 
 async function removeTeam(id) {
@@ -51,7 +51,7 @@ async function removeTeam(id) {
 
 
 async function getOrganisationByIDFromAPI(id) {
-    return getRequest('/orgs/getbyid/' + id, 'getOrganisationByID');
+    return getRequest('/herocorp/orgs/getbyid/' + id, 'getOrganisationByID');
 }
 
 async function getOrganisationByID(id) {

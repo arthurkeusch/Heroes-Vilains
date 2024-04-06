@@ -1,7 +1,7 @@
 import {getRequest, postRequest, patchRequest} from "./axios.service";
 
 async function getTeamsFromAPI() {
-    return getRequest('/teams/get', 'getTeams');
+    return getRequest('/herocorp/teams/get', 'getTeams');
 }
 
 async function getTeams() {
@@ -11,7 +11,7 @@ async function getTeams() {
 
 
 async function createTeamFromAPI(data) {
-    return postRequest('/teams/create', data, 'createTeam');
+    return postRequest('/herocorp/teams/create', data, 'createTeam');
 }
 
 async function createTeam(name) {
@@ -24,7 +24,7 @@ async function createTeam(name) {
 
 
 async function addHeroesFromAPI(data) {
-    return patchRequest('/teams/addheroes', data, 'addHeroes');
+    return patchRequest('/herocorp/teams/addheroes', data, 'addHeroes');
 }
 
 async function addHeroes(idHeroes, idTeam) {
@@ -38,7 +38,7 @@ async function addHeroes(idHeroes, idTeam) {
 
 
 async function removeHeroesFromAPI(data) {
-    return patchRequest('/teams/removeheroes', data, 'removeHeroes');
+    return patchRequest('/herocorp/teams/removeheroes', data, 'removeHeroes');
 }
 
 async function removeHeroes(idHeroes, idTeam) {

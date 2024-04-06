@@ -2,7 +2,8 @@ import axios from 'axios';
 import store from '@/store/index';
 
 const axiosAgent = axios.create({
-    baseURL: 'https://apidemo.iut-bm.univ-fcomte.fr/herocorp/'
+    baseURL: 'https://apidemo.iut-bm.univ-fcomte.fr',
+    withCredentials: true
 });
 
 axiosAgent.interceptors.request.use(
@@ -10,6 +11,10 @@ axiosAgent.interceptors.request.use(
         const secretPhrase = store.state.passwordOrganisation;
         if (secretPhrase) {
             config.headers['org-secret'] = secretPhrase;
+        }
+        const xsrfToken = localStorage.getItem('xsrfToken');
+        if (xsrfToken) {
+            config.headers['x-xsrf-token'] = xsrfToken;
         }
         return config;
     },
