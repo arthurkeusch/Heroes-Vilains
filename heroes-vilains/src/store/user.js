@@ -28,9 +28,9 @@ export default {
 
     actions: {
         async loginUser({commit, state}, {username, password}) {
-            /*await new Promise(resolve => {
-                setTimeout(resolve, 1000);
-            });*/
+            await new Promise(resolve => {
+                setTimeout(resolve, 500);
+            });
             commit('updateUsername', username);
             commit('updatePasswordUser', password);
             let answer = await signin(state.username, state.passwordUser);
@@ -56,6 +56,6 @@ export default {
             } else {
                 return 1;
             }
-        }
+        },
     }
 }

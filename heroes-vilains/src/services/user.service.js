@@ -22,16 +22,26 @@ async function getHeroUser(username) {
 }
 
 
-async function updateHeroFromAPI(data) {
+async function updateHeroFromApi(data) {
     return await putRequest('/herocorp/heroes/authupdate', data);
 }
 
 async function updateHero(hero) {
-    return await updateHeroFromAPI(hero);
+    return await updateHeroFromApi(hero);
+}
+
+
+async function createUserFromApi(data) {
+    return postRequest('/authapi/user/register', data, 'createHero');
+}
+
+async function createUser(data) {
+    return createUserFromApi(data);
 }
 
 export {
     signin,
     getHeroUser,
-    updateHero
+    updateHero,
+    createUser
 }

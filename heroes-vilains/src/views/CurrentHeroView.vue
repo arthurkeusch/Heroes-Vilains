@@ -50,6 +50,42 @@
     </EventDialog>
 
 
+    <EventDialog
+        :show="this.showDialogueCreateUser"
+        :width="'1000px'"
+        title="Creer un compte utilisateur pour le héro"
+        :show-button-o-k="false"
+        :show-button-fermer="true"
+        @closeDialog="closeDialogueCreerUser">
+      <div>
+        <v-container>
+          <v-card>
+            <v-card-text>
+              <v-card-text v-if="this.messageAlertUser" class="warning">{{ this.messageAlertUser }}</v-card-text>
+              <v-text-field v-model="login" label="Identifiant"></v-text-field>
+            </v-card-text>
+            <v-card-text>
+              <v-text-field v-model="password" label="Mot de passe"></v-text-field>
+            </v-card-text>
+          </v-card>
+
+          <v-card-actions>
+            <VueRecaptcha
+                :sitekey="siteKey"
+                :loadRecaptchaScript="true"
+                ref="recaptcha"
+                @verify="onCaptchaVerify"
+                @expired="onCaptchaExpired"
+            />
+            <v-spacer/>
+            <v-card-text v-if="this.messageAlertCreate" class="warning">{{ this.messageAlertCreate }}</v-card-text>
+            <v-btn @click="createUserFromStore">Creer le compte</v-btn>
+          </v-card-actions>
+        </v-container>
+      </div>
+    </EventDialog>
+
+
     <h1>Héro actuel :</h1>
     <v-card>
       <v-card-title>
@@ -62,7 +98,7 @@
       <ListPower :powers="currentHero['powers']" @deletePower="deletePower"/>
     </v-card>
 
-    <v-container>
+    <v-container v-if="this.$store.state.user.authUser">
       <v-card
           class="text-center green d-flex justify-center"
           @click="showDialogueUpdate()">
@@ -71,6 +107,28 @@
         </v-card-title>
       </v-card>
     </v-container>
+
+    <div style="display: flex" v-else>
+      <v-container>
+        <v-card
+            class="text-center green d-flex justify-center"
+            @click="showDialogueUpdate()">
+          <v-card-title>
+            Modifier le héro
+          </v-card-title>
+        </v-card>
+      </v-container>
+      <v-container>
+        <v-card
+            class="text-center green d-flex justify-center"
+            @click="showDialogueCreate()">
+          <v-card-title>
+            Creer un compte utilisateur pour le héro
+          </v-card-title>
+        </v-card>
+      </v-container>
+    </div>
+
   </v-container>
 </template>
 
@@ -78,13 +136,17 @@
 import {mapActions, mapState} from "vuex";
 import ListPower from "@/components/ListPowers.vue";
 import EventDialog from "@/components/EventDialog.vue";
+import Config from "@/commons/config";
+import VueRecaptcha from 'vue-recaptcha';
+import {createUser} from "@/services/user.service";
 
 export default {
   name: 'CurrentHeroView',
 
   components: {
     EventDialog,
-    ListPower
+    ListPower,
+    VueRecaptcha
   },
 
   data() {
@@ -99,7 +161,13 @@ export default {
       powerLevel: null,
       messageAlert: null,
       messageAlertName: null,
-      messageAlertCreate: null
+      messageAlertCreate: null,
+      showDialogueCreateUser: false,
+      login: '',
+      password: '',
+      messageAlertUser: null,
+      siteKey: Config.captchaSiteKey,
+      captchaToken: null
     };
   },
 
@@ -112,7 +180,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['updateHero', "updateHeroUser"]),
+    ...mapActions(['updateHero', 'updateHeroUser', 'setShowErrorDialogue', 'setErrorDescr', 'setErrorTitle']),
 
     getInfoHero() {
       if (this.$store.state.user.authUser) {
@@ -205,6 +273,41 @@ export default {
     deletePower(newPowersTab) {
       this.powers = newPowersTab;
       this.updateHeroFromStore();
+    },
+
+    showDialogueCreate() {
+      this.showDialogueCreateUser = true;
+    },
+
+    closeDialogueCreerUser() {
+      this.showDialogueCreateUser = false;
+    },
+
+    async createUserFromStore() {
+      let answer = await createUser({
+        login: this.login,
+        password: this.password,
+        hero: this.publicName,
+        captchaToken: this.captchaToken
+      });
+      if (answer.error !== 0) {
+        this.setShowErrorDialogue(true);
+        this.setErrorTitle("Impossible de crée le compte");
+        this.setErrorDescr(answer.data.data);
+      } else {
+        this.setShowErrorDialogue(true);
+        this.setErrorTitle("Succès");
+        this.setErrorDescr("Le compte à été crée avec succès !");
+      }
+      this.closeDialogueCreerUser();
+    },
+
+    onCaptchaVerify: function (response) {
+      this.captchaToken = response;
+    },
+
+    onCaptchaExpired: function () {
+      console.log('Expired');
     }
   }
 }

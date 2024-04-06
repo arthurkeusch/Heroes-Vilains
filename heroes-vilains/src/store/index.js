@@ -94,7 +94,7 @@ export default new Vuex.Store({
     actions: {
         async login({commit}, credentials) {
             await new Promise(resolve => {
-                setTimeout(resolve, 1000);
+                setTimeout(resolve, 500);
             });
             if (credentials.phrase !== null) {
                 commit('setLogin', credentials.phrase);
