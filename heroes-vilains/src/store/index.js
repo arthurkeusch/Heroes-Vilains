@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+
 import {
     addTeam,
     createOrganisation,
@@ -29,8 +30,6 @@ Vue.use(Vuex);
 export default new Vuex.Store({
 
     state: {
-        auth: false,
-        passwordOrganisation: null,
         currentHero: null,
         currentTeam: null,
         currentOrganisation: null,
@@ -40,10 +39,6 @@ export default new Vuex.Store({
     },
 
     mutations: {
-        updatePasswordOrganisation(state, password) {
-            state.passwordOrganisation = password;
-        },
-
         updateListHeroAlias(state, listHero) {
             state.listHeroAlias = listHero;
         },
@@ -68,41 +63,20 @@ export default new Vuex.Store({
             state.currentOrganisation = currentOrganisation;
         },
 
-        setLogin(state, phrase) {
-            state.auth = true;
-            state.passwordOrganisation = phrase;
-        },
-
-        setLogout(state) {
-            state.auth = false;
-            state.passwordOrganisation = null;
-        },
-
-        updateShowErrorDialogue(state, isShow){
+        updateShowErrorDialogue(state, isShow) {
             state.error.showErrorDialogue = isShow;
         },
 
-        updateErrorTitle(state, title){
+        updateErrorTitle(state, title) {
             state.error.errorTitle = title;
         },
 
-        updateErrorDescr(state, descr){
+        updateErrorDescr(state, descr) {
             state.errorDescr = descr;
         }
     },
 
     actions: {
-        async login({commit}, credentials) {
-            await new Promise(resolve => {
-                setTimeout(resolve, 500);
-            });
-            if (credentials.phrase !== null) {
-                commit('setLogin', credentials.phrase);
-            } else {
-                commit('setLogout');
-            }
-        },
-
         async getAllOrganisations({commit}) {
             let listOrganisation = await getAllOrganisations();
             commit('updateListOrganisations', listOrganisation.data);
@@ -200,4 +174,4 @@ export default new Vuex.Store({
         secret,
         user
     }
-})
+});

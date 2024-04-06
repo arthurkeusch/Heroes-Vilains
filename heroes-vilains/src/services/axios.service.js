@@ -8,7 +8,7 @@ const axiosAgent = axios.create({
 
 axiosAgent.interceptors.request.use(
     config => {
-        const secretPhrase = store.state.passwordOrganisation;
+        const secretPhrase = store.state.secret.passwordOrganisation;
         if (secretPhrase) {
             config.headers['org-secret'] = secretPhrase;
         }

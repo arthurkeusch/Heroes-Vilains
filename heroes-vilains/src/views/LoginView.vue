@@ -16,7 +16,6 @@
 </template>
 
 <script>
-
 import {mapActions, mapState} from 'vuex';
 
 export default {
@@ -40,7 +39,7 @@ export default {
       this.loading = true;
       await this.login({phrase: this.phrase});
       this.loading = false;
-      if (this.auth) {
+      if (this.$store.state.secret.auth) {
         this.$store.state.user.authUser = false;
         await this.$router.push('/organisation');
       } else {

@@ -79,16 +79,16 @@ const routes = [
         }
     },
     {
-        path:'/404',
-        name:'errorPage404',
+        path: '/404',
+        name: 'errorPage404',
         component: Error404,
         meta: {
             levelAuth: 0
         }
     },
     {
-        path:'*',
-        name:'error404'
+        path: '*',
+        name: 'error404'
     },
 ];
 
@@ -100,7 +100,7 @@ const router = new VueRouter({
 
 function checkAccess(to) {
     if (to.meta.levelAuth === 1) {
-        if (store.state.auth || store.state.user.authUser) {
+        if (store.state.secret.auth || store.state.user.authUser) {
             return true;
         } else {
             return false;

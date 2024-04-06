@@ -1,4 +1,8 @@
-import {getHeroUser, signin, updateHero} from "@/services/user.service";
+import {
+    getHeroUser,
+    signin,
+    updateHero
+} from "@/services/user.service";
 
 export default {
     state: () => ({
